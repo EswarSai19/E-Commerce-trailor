@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Out</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <h1>Checkout page</h1>
+    <div id="container">
+        <form>
+            <input type="number" placeholder="12 digit card number" id="card">
+            <input type="number" placeholder="CVV eg :6xx" id="cvv">
+            <input type="text" placeholder="expiry date eg : 12/23" id="expiry">
+            <input type="text" placeholder="enter name" id="name">
+            <input type="submit">
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    document.querySelector("form").addEventListener("submit",checkoutFun);
+
+    var cardDetails = []
+    // console.log(cardDetails.length)
+    function checkoutFun(){
+        
+
+        event.preventDefault();
+
+        var cardDetails = []
+       var obj = {
+        card : document.querySelector("#card").value,
+        cvv : document.querySelector("#cvv").value,
+        expiry: document.querySelector("#expiry").value,
+        name : document.querySelector("#name").value,
+       }
+       cardDetails.push(obj);
+    //    localStorage.setItem("card",JSON.stringify(cardDetails))
+      
+       for(var i=0; i<cardDetails.length; i++){
+        
+           if(cardDetails[i].card.length!=12 || cardDetails[i].cvv.length!=3 || 
+              cardDetails[i].expiry.length!=5 || cardDetails[i].name.length ==0){
+               alert("Error : Enter Valid Details")
+           }else{
+               alert("An OTP send to your mobile");
+               window.location.href = "OTP.html"
+           }
+       }
+    }
+
+    
+</script>

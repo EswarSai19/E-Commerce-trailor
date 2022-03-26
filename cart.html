@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Items</title>
+    <style>
+        #container{
+            display: flex;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        #head{
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div id="head">
+        <h1>Cart Items</h1>
+        <h1 id="totalAmount"></h1>
+    </div>
+    <div id="container"></div>
+    <input id="promo" type="text" placeholder="enter promo code">
+    <button id="apply">Apply</button>
+</body>
+</html>
+<script>
+    var cartItems = JSON.parse(localStorage.getItem("cart"));
+
+    cartItems.map(function(el,i){
+        // console.log(cartItems)
+       
+        var box = document.createElement("div");
+
+        var image = document.createElement("img");
+        image.src = el.image_url;
+
+        var name = document.createElement("p");
+         name.innerText = el.name;
+
+        
+        var price = document.createElement("p");
+        price.innerText = el.price
+
+        var strikedoffprice = document.createElement("p");
+        strikedoffprice.innerText = el.strikedoffprice;
+        strikedoffprice.style.textDecoration = "line-through"
+
+        var length = cartItems.length;
+        var total = cartItems.reduce(function(sum,el,i,arr){
+            return sum+(el.price)
+
+        },0)
+        
+        document.querySelector("#apply").addEventListener("click",promoFun)
+        function promoFun(){
+            var promo = document.querySelector("#promo").value
+            if(promo == "masai30"){
+             total = total - (total*(0.3))
+             var new_price = document.createElement("p");
+                    
+            }
+            // new_price.innerText = ` updated price is ${total}`
+            //    document.querySelector("body").append(new_price)  
+            document.querySelector("#totalAmount").innerText = `Total ${length} items cost is ${total}`
+            // alert("Promocode Applied")
+            window.location.href = "checkout.html"
+
+        }
+        document.querySelector("#totalAmount").innerText = `Total ${length} items cost is ${total}`
+
+      
+        
+        var btn = document.createElement("button");
+        btn.innerText = "remove";
+        btn.style.padding = "10px";
+        btn.style.alignContent = "center"
+        btn.addEventListener("click",function(){
+            removeFun(el,i);
+        })
+
+        box.append(image,name,price,strikedoffprice,btn);
+        console.log(box)
+         document.querySelector("#container").append(box);
+
+
+    })
+
+    function removeFun(el,i){
+        cartItems.splice(i,1);
+        localStorage.setItem("cart",JSON.stringify(cartItems))
+        window.location.reload();
+    }
+</script>

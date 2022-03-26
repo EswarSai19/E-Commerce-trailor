@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup page</title>
+</head>
+<body>
+    <form>
+        <input type="text" id="email" placeholder="enter email">
+        <input type="password" id="pass" placeholder="enter password">
+        <input type="text" id="user" placeholder="enter user name">
+        <select name="" id="gender">
+            <option value="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <input type="submit">
+    </form>
+   
+</body>
+</html>
+
+<script>
+    document.querySelector("form").addEventListener("submit",signupFun);
+
+    var userDetails = JSON.parse(localStorage.getItem("userCred")) || []
+    function signupFun(){
+        event.preventDefault();
+        var obj = {
+            email : document.querySelector("#email").value,
+            pass : document.querySelector("#pass").value,
+            user : document.querySelector("#user").value,
+            gender:document.querySelector("#gender").value,
+
+        };
+        userDetails.push(obj);
+        localStorage.setItem("userCred",JSON.stringify(userDetails))
+        alert("Signup Completed");
+        window.location.href = "login.html"
+    }
+</script>
